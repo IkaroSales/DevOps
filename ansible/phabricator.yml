@@ -1,0 +1,27 @@
+- name: Phabricator
+  hosts: all
+  become: yes
+  become_method: su
+
+  tasks:
+    - name: Update APT Packages
+      apt:
+        update_cache: yes
+
+    - name: Install Dependencies
+      package:
+        name: "{{item}}"
+        state: installed
+        update_cache: yes
+      with_items:
+        - docker.io
+        - docker-compose
+
+    - name: Container MariaDB
+      shell: docker container run --name db --env MYSQL_ALLOW_EMPTY_PASSWORD=true -d mariadb:10.3
+
+    - name: Container Phabricator
+      shell: docker container run -id -p 80:80 -p 8080:8080 --name phabricator --link db --env BASE_URL=http://{{inventory_hostname}} ikarofsantos/phabricator
+
+    - name: Start Phabricator
+      shell: docker exec phabricator scripts/ph_start.sh
