@@ -5,6 +5,7 @@ BRANCH_DESTINY=$2
 
 echo ">>> Checkout in $BRANCH_DESTINY"
 git checkout $BRANCH_DESTINY
+git pull origin $BRANCH_DESTINY
 echo ""
 
 echo ">>> Merge $BRANCH_ORIGIN (from) -> $BRANCH_DESTINY (to)"
