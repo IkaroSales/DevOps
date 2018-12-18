@@ -1,5 +1,5 @@
 # DevOps
 
-https://github.com/IkaroSales/DevOps.git
+https://ecsworkshop.com
 
 IkaroSales.
